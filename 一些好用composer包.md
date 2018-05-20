@@ -1,11 +1,12 @@
 ---
-title: 一些好用composer包
+title: 一些好用php composer包
 date: 2018-04-13 9:56:54
 tags: php
 ---
 
 记录一些工作中用到过的composer包，这些包的具体使用和环境依赖就不介绍了，可以自己去[packagist.org](https://packagist.org)上查看
 <!--more-->
+
 | 描述 | 描述 |
 | --- | --- |
 | smalot/pdfparser | 一个强大的PDF包，可以读取PDF文件转成text |
