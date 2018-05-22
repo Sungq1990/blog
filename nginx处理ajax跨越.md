@@ -4,7 +4,7 @@ date: 2018-02-28 16:56:54
 tags: nginx
 ---
 
-新写个前后端分离的项目,前端的域名是https://aa.xxx.com,接口域名是https://bb.xxx.com,前端框架用的是vue,ajax包用的是axios。用axios发送请求到到后端接口是报跨域错误
+新写个前后端分离的项目,前端的域名是aa.xxx.com, 接口域名是bb.xxx.com, 前端框架用的是vue,ajax包用的是axios。用axios发送请求到到后端接口是报跨域错误
 <!--more-->
 axios会先发送一个Request Method为OPTIONS的请求,浏览器自动在跨域的请求发送之前发送一个 OPTIONS 请求，以判断服务端是否允许这一域访问,我这边是改了nginx配置实现跨域的,废话不多说上代码和配置
 ##### vue前端代码
@@ -73,3 +73,5 @@ server {
 }
 ```
 我的是htpps的配置,端口监听的是443
+
+
