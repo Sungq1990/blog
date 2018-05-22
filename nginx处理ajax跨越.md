@@ -4,7 +4,7 @@ date: 2018-02-28 16:56:54
 tags: nginx
 ---
 
-新写个前后端分离的项目,前端的域名是aa.xxx.com, 接口域名是bb.xxx.com, 前端框架用的是vue,ajax包用的是axios。用axios发送请求到后端接口是报跨域错误
+新写个前后端分离的项目,前端的域名是aa.xxx.com, 接口域名是bb.xxx.com, 前端框架用的是vue,ajax包用的是axios。用axios发送请求到到后端接口是报跨域错误
 <!--more-->
 axios会先发送一个Request Method为OPTIONS的请求,浏览器自动在跨域的请求发送之前发送一个 OPTIONS 请求，以判断服务端是否允许这一域访问,我这边是改了nginx配置实现跨域的,废话不多说上代码和配置
 ##### vue前端代码
@@ -15,7 +15,7 @@ let params = {class:'SEARCH'}
 console.log(JSON.stringify(params))
 axios({
     method: "POST",
-    url: 'https://bb.xxx.com',
+    url: 'https://housekeeper.health666.club',
     data: params,
     headers: {
       'Cache-Control': 'no-cache',
@@ -33,6 +33,12 @@ axios({
 
 ##### nginx配置(server部分)
 ```
+map $http_origin $corsHost {
+    default 0;
+    "~https://aa.xxx.com" https://aa.xxx.com;
+    "~http://localhost:8080" http://localhost:8080;
+}
+
 server {
     listen       443;
     server_name  bb.xxx.com;
@@ -45,7 +51,7 @@ server {
     ssl_prefer_server_ciphers on;
     index index.html index.htm index.php;
     root /data/home/www/xxx/public;
-    add_header 'Access-Control-Allow-Origin' https://aa.xxx.com;
+    add_header 'Access-Control-Allow-Origin' $corsHost;
     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
     add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,X-Requested-With,If-Modified-Since,Keep-Alive,User-Agent,Cache-Control,Content-Type,Connection,Content-length,Account-Key,UTC-Timestamp,Random,Signature';
     
@@ -54,7 +60,7 @@ server {
             add_header 'Access-Control-Max-Age' 1728000;
             add_header 'Content-Type' 'text/plain charset=UTF-8';
             add_header 'Content-Length' 0;
-            add_header 'Access-Control-Allow-Origin' https://bb.xxx.com;
+            add_header 'Access-Control-Allow-Origin' $corsHost;
             add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
             add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,X-Requested-With,If-Modified-Since,Keep-Alive,User-Agent,Cache-Control,Content-Type,Connection,Content-length,Account-Key,UTC-Timestamp,Random,Signature';
             return 204;
@@ -72,6 +78,4 @@ server {
     }      
 }
 ```
-我的是htpps的配置,端口监听的是443
-
-
+我的是htpps的配置,端口监听的是443,并且为了本地调试方便配了多个Access-Control-Allow-Origin
