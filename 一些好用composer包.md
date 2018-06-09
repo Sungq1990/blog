@@ -21,4 +21,7 @@ tags: php
 | maatwebsite/excel | 处理excel必备 |
 | guzzlehttp/guzzle | curl并发 |
 | jenssegers/agent | 跨平台检测 |
+| rap2hpoutre/laravel-log-viewer | 日志可视化包|
+| thiagoalessio/tesseract_ocr | php封装的tesseract ocr包|
+
 
