@@ -15,3 +15,44 @@ exec("pdftotext test.pdf text.txt", $output, $ret);
 然后对text.txt的数据进行处理就行，处理的过程中发现一个奇怪的东西，如图
 ![avatar](https://ws2.sinaimg.cn/large/006tKfTcgy1fryaa8093pj31c20b0ag4.jpg)
 两个大写的FF，一脸懵逼，突然想起来以前遇到过一个差不多的EOT（传输结束符），原来是ASCII码中的换页符号，用preg_replace("/\f/i", '', $str)去除即可，有空要好好的研究下ASCII码，免得看到一脸懵逼
+
+
+---------------2018-06-12更新-------------------------
+目标网址进行了一次升级，模糊处理的pdf并打上了水印，pdftotext已经识别不出了
+原pdf
+![原pdf](https://ws3.sinaimg.cn/large/006tKfTcgy1fs8mx0dherj30ny0uc0vt.jpg)
+现pdf
+![现pdf](https://ws1.sinaimg.cn/large/006tKfTcgy1fs8myrxexxj30hu0qudhb.jpg)
+所以采取了新的方法，先将pdf转成png图片，在用百度OCR识别图片内容。
+将pdf转成图片用的是imagemagick,安装方法自行百度，命令为
+
+```
+convert -verbose -colorspace RGB -resize 1800 -interlace none -density 300 -quality 100 path/test.pdf path/test.png
+```
+
+然后我又对图片进行了裁剪，命令为
+
+```
+convert path/test.png -gravity northwest -crop 35%x250%+300+100 path/test.png
+
+convert path/test.png -gravity NorthEast -crop 50%x100% path/test.png
+```
+
+裁剪后的效果
+![](https://ws3.sinaimg.cn/large/006tKfTcgy1fs8n1cs3fhj30b80qit9u.jpg)
+
+然后处理了一下水印，我这边处理的方法是用convert替换水印的颜色为背景色
+
+```
+convert path/test.png -alpha set -channel RGBA -fuzz 10% -fill "rgb(239,239,239)" -opaque "rgb(255,255,255)" path/test.png
+```
+
+然后提高了图片的分辨率
+
+```
+convert -resize 1000x5000! -interlace none -density 300 -quality 100 path/test.png path/test.png
+```
+
+最后调用百度OCR识别图片内容，只要图片处理的好，大部分内容可以成功识别出来
+
+
