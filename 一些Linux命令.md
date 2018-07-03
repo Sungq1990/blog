@@ -4,7 +4,9 @@ date: 2018-07-03 15:02:00
 tags: linux
 ---
 
->
+记录一些常用的linux命令，方便查询
+<!--more-->
+
 ##### 文件夹操作类
 > 1.mv或者cp: 复制 exp: mv file1 file2
 > 2.mkdir: 新建文件夹 exp: mkdir name
@@ -32,9 +34,13 @@ kill -USR1 等于 nginx -s reopen
 kill -USR2 等于 nginx -s reload 
 reload 和 reopen 的行为相差很大，reopen 仅仅检查日志文件，reload 会重载配置，并启动新 worker，关闭旧 worker 
 ##### 查看机器负载
-> 1️⃣uptime或者w 
+> ①uptime或者w 
 exp:12:22:02 up 44 days, 21:48,  2 users,  load average: 3.96, 6.28,5.16  
 load average分别对应于过去1分钟，5分钟，15分钟的负载平均值
-> 2️⃣top  实时的监控，按q退出
+> ②top  实时的监控，按q退出
 (1) 在top下按“1”查看CPU核心数量，shift+"c"按cpu使用率大小排序，shif+"p"按内存使用率高低排序
 (2) 使用iostat -x 命令来监控io的输入输出是否过大
+> ③安装htop，使用htop命令
+
+
+
