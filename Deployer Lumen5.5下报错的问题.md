@@ -76,3 +76,6 @@ task('deploy', [
 ]);
 ```
 
+附上Deployer的详细安装教程[教程](https://laravel-china.org/articles/13242/another-introduction-to-the-use-of-deployer)
+
+
