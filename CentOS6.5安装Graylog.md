@@ -121,7 +121,7 @@ upstream graylog-web-cluster {
 php7下修改php-fpm端口的方法
 
 ```
-vi phpPath/etc/php-fpm.d/www.conf
+vi phpPath/etc/php-fpm.conf
 listen = 127.0.0.1:9001
 保存退出
 重启php-fpm
