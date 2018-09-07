@@ -67,5 +67,20 @@ show binary logs;
 //具体查看某个binlog
 show binlog events in 'mysql-bin.000004';
 ```
+
+分析mysql慢日志
+
+```
+用mysql自带的mysqldumpslow
+mysqldumpslow path/slow.log
+
+出现次数(Count), 
+执行最长时间(Time), 
+累计总耗费时间(Time), 
+等待锁的时间(Lock), 
+发送给客户端的行总数(Rows), 
+扫描的行总数(Rows), 
+用户以及sql语句本身(抽象了一下格式, 比如 limit 1, 20 用 limit N,N 表示).
+```
     
 
