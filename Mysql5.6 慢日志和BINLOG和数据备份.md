@@ -48,10 +48,7 @@ filename=$dic/$dbname$y$m$d.sql
 echo "bakup name:"$filename
  
 #删除7天前的备份文件
-for file in `ls -a $dic`
-do
- find -mtime 7 -name "*.sql" -exec rm -rf {} \;
-done
+/bin/find $dic -mtime +7 -name "*.sql"|xargs rm -f
  
 #备份数据库
 echo "备份数据库"
