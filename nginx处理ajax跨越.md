@@ -1,6 +1,6 @@
 ---
 title: nginx处理ajax跨越
-date: 2018-02-28 16:56:54
+date: 2016-02-28 16:56:54
 tags: nginx
 ---
 

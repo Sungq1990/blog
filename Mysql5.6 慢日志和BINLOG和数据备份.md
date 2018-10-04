@@ -1,6 +1,6 @@
 ---
 title: Mysql5.6 慢日志和BINLOG和数据备份
-date: 2018-09-07 09:51:00
+date: 2016-09-07 09:51:00
 tags: mysql
 ---
 

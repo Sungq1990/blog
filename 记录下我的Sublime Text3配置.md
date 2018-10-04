@@ -1,6 +1,6 @@
 ---
 title: 记录下我的Sublime Text3配置
-date: 2018-07-05 10:28:54
+date: 2017-07-05 10:28:54
 tags: Sublime
 ---
 

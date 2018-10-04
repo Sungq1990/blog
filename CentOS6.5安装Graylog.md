@@ -1,6 +1,6 @@
 ---
 title: CentOS6.5安装Graylog
-date: 2018-08-03 16:45:00
+date: 2017-08-03 16:45:00
 tags: Graylog
 ---
 

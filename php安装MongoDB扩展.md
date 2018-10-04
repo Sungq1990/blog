@@ -1,6 +1,6 @@
 ---
 title: php安装MongoDB扩展
-date: 2018-05-27 21:56:00
+date: 2016-05-27 21:56:00
 tags: php MongoDB
 ---
 安装php MongoDB扩展，我的php路径为/data/home/server/php，使用 pecl 命令来安装 命令为
