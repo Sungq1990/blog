@@ -1,7 +1,7 @@
 ---
 title: satis搭建一个私有composer包仓库
 date: 2018-10-09 19:20:14
-tags: satis composer
+tags: satis composer webhook
 ---
 
 现在服务端基本都是微服务了，多个工程之间肯定有许多公共的基础组件，比如日志、队列、邮件等等，这些都是每个工程都可能要用到的，可以封装成公司的私有组件包，这样各个工程需要用到的时候只要引入这个包就可以了，这就需要搭建一个包仓库了，这里我们选用了比较简单的satis。
@@ -137,3 +137,10 @@ composer出现Your configuration does not allow connections to
 出现这样的问题是，镜像使用的是http，而原地址是需要https，所以配置下关掉https就好了
 composer config -g secure-http false
 ```
+#### 用webhook自动更新satis仓库
+***
+webhooks可以通过监听push触发回调，发送post请求到所指定的地址，服务端收到该请求进行对应的git pull更新代码的操作
+我这边用的代码仓库是码云
+![](https://ws1.sinaimg.cn/large/006tNbRwgy1fw273gtk5dj31kw0eu41c.jpg)
+添加上你的webhook回调接口就行
+这里在推荐一个很好用的webhook管理工具[webhook](https://github.com/adnanh/webhook),是用go实现的
