@@ -217,6 +217,19 @@ func PrivateEncrypt(privt *rsa.PrivateKey, data []byte) ([]byte, error) {
   return signData, nil
 }
 /**
+ * 私钥加密(MD5withRSA)
+ */
+func PrivateEncryptMD5withRSA(privt *rsa.PrivateKey, data []byte) ([]byte, error) {
+  hashMD5 := md5.New()
+  hashMD5.Write(data)
+  Digest := hashMD5.Sum(nil)
+  signData, err := rsa.SignPKCS1v15(nil, privt, crypto.MD5, Digest)
+  if err != nil {
+    return nil, err
+  }
+  return signData, nil
+}
+/**
  * 公钥解密
  */
 func PublicDecrypt(pub *rsa.PublicKey, data []byte) ([]byte, error) {
