@@ -19,3 +19,60 @@ dynamic模式为了最大化地优化服务器响应，会造成更多内存使�
 ```
 和pm= dynamic相反，把内存放在第一位，他的工作模式很简单，每个闲置进程，在持续闲置了pm.process_idle_timeout秒后就会被杀掉，有了这个模式，到了服务器低峰期内存自然会降下来，如果服务器长时间没有请求，就只会有一个php-fpm主进程，当然弊端是，遇到高峰期或者如果pm.process_idle_timeout的值太短的话，无法避免服务器频繁创建进程的问题 
 ```
+<!--more-->
+
+## php-fpm和nginx状态监控
+#### 新增nginx站点
+```
+server {
+    listen       80;
+    server_name  localhost;
+
+    index index.php index.html;
+    
+    location /nginx_status {
+          stub_status on;
+          access_log off;
+          allow 127.0.0.1;
+    }
+
+    location ~ /php_fpm_status$ {
+            allow 127.0.0.1;
+            fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+            include fastcgi_params;
+            fastcgi_pass 127.0.0.1:9000;
+    }
+}
+```
+#### 修改php-fpm的配置
+```
+vi www.conf
+去掉 pm.status_path前面的注释，并改成pm.status_path = /php_fpm_status
+重启php-fpm
+```
+
+#### 使用curl指令查看php-fpm和nginx的status
+```
+curl localhost/nginx_status
+curl localhost/php_fpm_status
+```
+#### nginx status的含义
+- active connections – 活跃的连接数量
+- server accepts handled requests — 总共处理了11989个连接 , 成功创建11989次握手, 总共处理了11991个请求
+- reading — 读取客户端的连接数.
+- writing — 响应数据到客户端的数量
+- waiting — 开启 keep-alive 的情况下,这个值等于 active – (reading+writing), 意思就是 Nginx 已经处理完正在等候下一次请求指令的驻留连接
+
+#### php-fpm status的含义
+- start time – 启动日期,如果reload了php-fpm，时间会更新
+- start since – 运行时长
+- accepted conn – 当前池子接受的请求数
+- listen queue – 请求等待队列，如果这个值不为0，那么要增加FPM的进程数量
+- max listen queue – 请求等待队列最高的数量
+- listen queue len – socket等待队列长度
+- idle processes – 空闲进程数量
+- active processes – 活跃进程数量
+- total processes – 总进程数量
+- max active processes – 最大的活跃进程数量（FPM启动开始算）
+- max children reached - 大道进程最大数量限制的次数，如果这个数量不为0，那说明你的最大进程数量太小了，请改大一点。
+- slow requests – 启用了php-fpm slow-log，缓慢请求的数量
