@@ -203,6 +203,6 @@ Vue Syntax Highlight
 vue-syntax-highlight
 ```
 ------------------最终效果图--------------------
-![](https://ws3.sinaimg.cn/large/006tNc79gy1ftwol09lf0j31kw0vinbq.jpg)
+![](https://i.loli.net/2019/04/29/5cc6b9811ba05.jpg)
 
 

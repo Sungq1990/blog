@@ -141,6 +141,6 @@ composer config -g secure-http false
 ***
 webhooks可以通过监听push触发回调，发送post请求到所指定的地址，服务端收到该请求进行对应的git pull更新代码的操作
 我这边用的代码仓库是码云
-![](https://ws1.sinaimg.cn/large/006tNbRwgy1fw273gtk5dj31kw0eu41c.jpg)
+![](https://i.loli.net/2019/04/29/5cc6b8a51d888.jpg)
 添加上你的webhook回调接口就行
 这里在推荐一个很好用的webhook管理工具[webhook](https://github.com/adnanh/webhook),是用go实现的

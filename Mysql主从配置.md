@@ -84,5 +84,5 @@ mysql> show slave status\G;
 Slave_IO_Running: Yes
 Slave_SQL_Running: Yes
 ```
-![最终效果](https://ws4.sinaimg.cn/large/006tNbRwgy1fvh6fy3jd2g30z50i2e29.gif)
+![最终效果](https://i.loli.net/2019/04/29/5cc6b7d0b72fc.gif)
 
