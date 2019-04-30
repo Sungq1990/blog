@@ -76,3 +76,22 @@ curl localhost/php_fpm_status
 - max active processes – 最大的活跃进程数量（FPM启动开始算）
 - max children reached - 大道进程最大数量限制的次数，如果这个数量不为0，那说明你的最大进程数量太小了，请改大一点。
 - slow requests – 启用了php-fpm slow-log，缓慢请求的数量
+
+#### 基常用维护指令
+- 获取php-fpm的平均消耗内存
+ - 指令：ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
+
+#### 进程数优化方案
+- pm = dynamic
+ - 说明使用动态方式
+- pm.max_children = 130
+ - 说明：必须 <= pm.max_spare_servers
+- pm.start_servers = 80
+ - 说明：内存容量 / 进程平均消耗内存大小，保持50%余量左右；
+ - 例如: 平均php-fpm消耗20M内存，4G内存最低可以保持 2G/30M=60
+- pm.min_spare_servers = 50
+ - 说明：动态方式下的最小php-fpm进程数 
+- pm.max_spare_servers = 120
+ - 例如: 平均php-fpm消耗30M内存，3G/30M=100
+- pm.max_requests = 512
+ - 说明：设置每个子进程重生之前服务的请求数； 
