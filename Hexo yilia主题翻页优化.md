@@ -21,6 +21,7 @@ tags: hexo yilia
 全文搜索 &laquo; Prev和 Next &raquo 并改成 上一页和下一页
 改js总共要改两处地方
 
+
 最后
 /themes/yilia/layout/_partial/script.ejs
 删除该文件里的Next &raquo 和 &laquo; Prev
