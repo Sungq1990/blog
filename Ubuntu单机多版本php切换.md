@@ -9,15 +9,20 @@ tags: Ubuntu php
 ```txt
 #!/bin/bash
 
-# 检查是否提供了新版本作为命令行参数
-if [ -n "$1" ]; then
-    # 如果提供了新版本作为参数
-    NEW_PHP_VERSION=$1
-else
-    # 如果没有提供新版本，则检测当前 PHP CLI 版本
-    CURRENT_CLI_VERSION=$(php -v | grep -oP 'PHP [0-9]+\.[0-9]+' | awk '{print $2}')
-    NEW_PHP_VERSION=$CURRENT_CLI_VERSION
-fi
+# 定义可用的 PHP 版本
+PHP_VERSIONS=("7.3" "8.2")
+
+# 提示用户选择 PHP 版本
+echo "请选择要切换的 PHP 版本："
+select VERSION in "${PHP_VERSIONS[@]}"; do
+    if [[ -n "$VERSION" ]]; then
+        NEW_PHP_VERSION="$VERSION"
+        echo "你选择的版本是 PHP $NEW_PHP_VERSION"
+        break
+    else
+        echo "无效的选择，请重试。"
+    fi
+done
 
 # 获取所有正在运行的 PHP-FPM 服务
 RUNNING_SERVICES=$(systemctl list-units --type service --state running | grep 'php.*fpm.service')
@@ -32,13 +37,13 @@ if [ ! -z "$CURRENT_PHP_VERSION" ]; then
 fi
 
 # 更新 PHP CLI 替代配置
-sudo update-alternatives --set php /usr/bin/php$NEW_PHP_VERSION
+sudo update-alternatives --set php "/usr/bin/php${NEW_PHP_VERSION}"
 
 # 启动新版本的 PHP-FPM 服务
 echo "Starting PHP-FPM service (php${NEW_PHP_VERSION}-fpm)..."
 sudo systemctl start "php${NEW_PHP_VERSION}-fpm.service"
 
-echo "Switched PHP CLI to $NEW_PHP_VERSION and (re)started PHP-FPM."
+echo "已切换到 PHP CLI 版本 $NEW_PHP_VERSION，并（重新）启动了 PHP-FPM 服务。"
 ```
 
 #### 配置开机服务
@@ -67,5 +72,5 @@ systemctl start run-on-startup.service
 #### 使用方法
 
 ```txt
-./switch-php.sh 8.2 or ./switch-php.sh 7.3
+./switch-php.sh
 ```
