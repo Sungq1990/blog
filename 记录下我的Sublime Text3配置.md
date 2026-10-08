@@ -180,7 +180,12 @@ tags: Sublime
   "use_tab_stops": true,
   "word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?",
   "word_wrap": "auto",
-  "wrap_width": 0
+  "wrap_width": 0,
+  "auto_reload": true,
+  // 强制允许在网络/虚拟文件系统上使用轮询监听
+  "reload_file_on_change": "prompt",
+  // 开启对无法接收事件的文件系统的轮询监测（需要 ST4 较新版本）
+  "ignore_inotify": false
 }
 
 ```
